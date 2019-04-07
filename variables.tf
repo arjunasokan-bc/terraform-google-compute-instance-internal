@@ -73,3 +73,8 @@ variable "public_key_path" {
   description = "Only private-key auth is enabled by default. Use `ssh-keygen -t rsa` to generate a public-private keypair."
   default     = "~/.ssh/id_rsa.pub"
 }
+
+variable "network" {
+  description = "VPC network name"
+  default     = "default"
+}

@@ -60,7 +60,7 @@ resource "google_compute_instance" "instances" {
   }
 
   network_interface = {
-    network = "default"
+    network = "${var.network}"
 
     access_config = {
       nat_ip = "${google_compute_address.instances.*.address[count.index]}"
@@ -104,10 +104,4 @@ resource "google_compute_instance" "instances" {
 
 
 # }
-
-
-# ========================================================================================= #
-#                   binding a DNS name to the ephemeral IP of a new instance                #
-#                            requires google_dns_managed_zone                               #
-# ========================================================================================= #
 
