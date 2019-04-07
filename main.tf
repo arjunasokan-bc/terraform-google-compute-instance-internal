@@ -1,7 +1,6 @@
-
 resource "google_compute_address" "instances" {
-  count = "${var.amount}"
-  name  = "${var.name_prefix}-${count.index}"
+  count  = "${var.amount}"
+  name   = "${var.name_prefix}-${count.index}"
   region = "${var.region}"
 }
 
@@ -11,6 +10,7 @@ resource "google_compute_disk" "instances" {
   name = "${var.name_prefix}-${count.index+1}"
   type = "${var.disk_type}"
   size = "${var.disk_size}"
+
   # optional
   zone = "${var.zone}"
 
@@ -54,9 +54,9 @@ resource "google_compute_instance" "instances" {
 
   # reference: https://cloud.google.com/compute/docs/storing-retrieving-metadata
   metadata {
-    description  = "Managed by Terraform"
-    user-data = "${replace(replace(var.user_data, "$$ZONE", var.zone), "$$REGION", var.region)}"
-    ssh-keys = "${var.username}:${file("${var.public_key_path}")}"
+    description = "Managed by Terraform"
+    user-data   = "${replace(replace(var.user_data, "$$ZONE", var.zone), "$$REGION", var.region)}"
+    ssh-keys    = "${var.username}:${file("${var.public_key_path}")}"
   }
 
   network_interface = {
@@ -79,10 +79,12 @@ resource "google_compute_instance" "instances" {
 #                                  provisioner actions                                      #
 # ========================================================================================= #
 
+
 # resource "null_resource" "provisioner" {
 #   triggers {
 #     vm                            = "${google_compute_instance.instances.name}"
 #   }
+
 
 #   # generic connection block for all provisioners
 #   connection {
@@ -92,6 +94,7 @@ resource "google_compute_instance" "instances" {
 #     private_key                   = "${file("${var.private_key_path}")}"
 #   }
 
+
 # reference: https://github.com/jonmorehouse/terraform-provisioner-ansible
 # fails: not maintained, not compatible with latest tf version
 # provisioner "ansible" {
@@ -99,23 +102,12 @@ resource "google_compute_instance" "instances" {
 #   hosts = ["all"]
 # }
 
+
 # }
+
 
 # ========================================================================================= #
 #                   binding a DNS name to the ephemeral IP of a new instance                #
 #                            requires google_dns_managed_zone                               #
 # ========================================================================================= #
 
-resource "google_dns_record_set" "dns_record" {
-  # name = "${google_compute_instance.instances.*.name[count.index]}.${google_dns_managed_zone.dns_zone.dns_name}"
-  # for example: dns_record_name=ansible-dev
-  # will be: ansible-dev.cloud.eimertvink.nl
-  # name = "${var.dns_record_name}.${google_dns_managed_zone.managed_zone.dns_name}"
-  # managed_zone = "${google_dns_managed_zone.managed_zone.name}"
-  name = "${var.dns_record_name}.${var.dns_zone}"
-  managed_zone = "${var.dns_name}"
-  type = "A"
-  ttl  = 300
-
-  rrdatas = ["${google_compute_instance.instances.*.network_interface.0.access_config.0.assigned_nat_ip}"]
-}
