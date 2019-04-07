@@ -85,26 +85,3 @@ n1-highcpu-4
 n1-highcpu-8
 ```
 Values are derived from [Google cloud console REST API call examples](https://console.cloud.google.com/compute/instancesAdd). Click for CPU and memory details.
-
-## DNS
-
-The subdomain cloud.eimertvink.nl is configured with Google' nameservers:<br>
-<img src="./img/freedns-cloud.eimertvink.nl.png" border="1">
-
-This terraform plan creates an DNS A record for VMs. When (VM) `amount = 2`, this results in:<br>
-<img src="./img/console.cloud.google.com-cloud.eimertvink.nl.png" border="1">
-<br>
-If you want a unique (sub-)subdomain for every VM, use multiple TF module calls:
-```ruby
-module "gc1" {
-  (..)
-  dns_record_name = "ansible-dev"
-  (..)
-}
-
-module "gc2" {
-  (..)
-  dns_record_name = "ansible-tst"
-  (..)
-}
-```
