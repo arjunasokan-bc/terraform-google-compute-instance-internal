@@ -78,3 +78,8 @@ variable "network" {
   description = "VPC network name"
   default     = "default"
 }
+
+variable "subnetwork" {
+  description = "VPC subnetwork name"
+  default     = "default"
+}

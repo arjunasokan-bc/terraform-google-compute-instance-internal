@@ -60,7 +60,8 @@ resource "google_compute_instance" "instances" {
   }
 
   network_interface = {
-    network = "${var.network}"
+    network    = "${var.network}"
+    subnetwork = "${var.subnetwork}"
 
     access_config = {
       nat_ip = "${google_compute_address.instances.*.address[count.index]}"
