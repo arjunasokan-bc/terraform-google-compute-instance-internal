@@ -1,9 +1,3 @@
-resource "google_compute_address" "instances" {
-  count  = "${var.amount}"
-  name   = "${var.name_prefix}-${count.index}"
-  region = "${var.region}"
-}
-
 resource "google_compute_disk" "instances" {
   count = "${var.amount}"
 
@@ -62,10 +56,6 @@ resource "google_compute_instance" "instances" {
   network_interface = {
     network    = "${var.network}"
     subnetwork = "${var.subnetwork}"
-
-    access_config = {
-      nat_ip = "${google_compute_address.instances.*.address[count.index]}"
-    }
   }
 
   scheduling {
