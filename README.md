@@ -1,6 +1,6 @@
 # terraform-google-compute-instance-internal
 
-Create virtual machines on Google Cloud. With DNS A record for easy access. Published in the [Terraform registry](https://registry.terraform.io/modules/ichundu/compute-instance-internal/).
+Create internal virtual machines on Google Cloud. The instance does not have an external IP address associated. Published in the [Terraform registry](https://registry.terraform.io/modules/ichundu/compute-instance-internal/).
 
 ## Usage example:
 
