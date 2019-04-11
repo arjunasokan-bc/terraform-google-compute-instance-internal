@@ -1,6 +1,6 @@
-# terraform-google-compute-engine-instance
+# terraform-google-compute-engine-instance-internal
 
-Create virtual machines on Google Cloud. With DNS A record for easy access. Published in the [Terraform registry](https://registry.terraform.io/modules/Eimert/compute-engine-instance/).
+Create virtual machines on Google Cloud. With DNS A record for easy access. Published in the [Terraform registry](https://registry.terraform.io/modules/ichundu/compute-engine-instance-internal/).
 
 ## Usage example:
 
@@ -16,7 +16,7 @@ provider "google" {
 }
 
 module "vm1" {
-  source          = "github.com/Eimert/terraform-google-compute-engine-instance"
+  source          = "github.com/ichundu/terraform-gce-instance-internal"
   amount          = 1
   region          = "europe-west4"
   zone            = "europe-west4-c"
