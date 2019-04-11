@@ -15,15 +15,6 @@ provider "google" {
   project     = "smashing-dash-1992"
 }
 
-module "google-dns-managed-zone" {
-  source          = "github.com/Eimert/terraform-google-dns-managed-zone"
-
-  # descriptive name for dns zone
-  dns_name        = "cloud-zone"
-  # requires last dot. Ex.: prod.example.com.
-  dns_zone        = "cloud.eimertvink.nl."
-}
-
 module "vm1" {
   source          = "github.com/Eimert/terraform-google-compute-engine-instance"
   amount          = 1
@@ -36,8 +27,6 @@ module "vm1" {
   disk_size       = "15"
   disk_image      = "centos-cloud/centos-7"
 
-  dns_name        = "${module.google-dns-managed-zone.dns_name}"
-  dns_zone        = "${module.google-dns-managed-zone.dns_zone}"
   dns_record_name = "tower-dev"
 
   user_data       = "firestone-lab"

@@ -65,34 +65,3 @@ resource "google_compute_instance" "instances" {
 
   allow_stopping_for_update = "true"
 }
-
-# ========================================================================================= #
-#                                  provisioner actions                                      #
-# ========================================================================================= #
-
-
-# resource "null_resource" "provisioner" {
-#   triggers {
-#     vm                            = "${google_compute_instance.instances.name}"
-#   }
-
-
-#   # generic connection block for all provisioners
-#   connection {
-#     type                          = "ssh"
-#     host                          = "${google_compute_address.instances.*.address[count.index]}"
-#     user                          = "${var.username}"
-#     private_key                   = "${file("${var.private_key_path}")}"
-#   }
-
-
-# reference: https://github.com/jonmorehouse/terraform-provisioner-ansible
-# fails: not maintained, not compatible with latest tf version
-# provisioner "ansible" {
-#   playbook = "awx.yml"
-#   hosts = ["all"]
-# }
-
-
-# }
-
