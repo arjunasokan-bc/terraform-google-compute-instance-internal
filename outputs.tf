@@ -3,7 +3,7 @@ output zones_available {
   value       = "{data.google_compute_zones.available.names}"
 }
 
-output instances_links {
+output instances_self_links {
   description = "Output self_link of created instances."
-  value       = "${google_compute_instance.instance.*.self_link}"
+  value       = "${google_compute_instance.instances.*.self_link}"
 }
